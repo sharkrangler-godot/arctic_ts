@@ -117,20 +117,13 @@ function clearDisplay() {
     display.value = "";
 }
 
-async function calculate() {
+function calculate() {
     try {
         const result = Function('"use strict"; return (' + display.value + ')')();
 
+        // Redirect if the result is exactly 80085
         if (Number(result) === 80085) {
-            history.pushState({}, "", "/");
-
-            const response = await fetch("arctic.html");
-            const html = await response.text();
-
-            document.open();
-            document.write(html);
-            document.close();
-
+            window.location.href = "arctic.html";
             return;
         }
 
